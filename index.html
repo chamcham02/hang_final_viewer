@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="행정법 기말">
+<title>행정법 기말 필기본</title>
+<style>
+:root{
+  color-scheme: light;
+  --paper:#F3F5F4; --surface:#FFFFFF; --ink:#1B2127; --muted:#5A646E; --faint:#8A949D; --rule:#DCE1E4;
+  --accent:#27457A; --accent-soft:#E6ECF6; --red:#C8322A;
+  --serif:"Noto Serif KR","AppleMyungjo","Nanum Myeongjo","Batang",serif;
+  --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --paper:#151A1F; --surface:#1B2229; --ink:#E4E8EB; --muted:#A3ADB6; --faint:#7C8791; --rule:#2C353E;
+    --accent:#8FB0E8; --accent-soft:#223149; --red:#FF7A70;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --paper:#151A1F; --surface:#1B2229; --ink:#E4E8EB; --muted:#A3ADB6; --faint:#7C8791; --rule:#2C353E;
+  --accent:#8FB0E8; --accent-soft:#223149; --red:#FF7A70;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14.5px;line-height:1.7;display:flex;align-items:center;justify-content:center;padding:16px}
+.card{width:min(520px,100%);background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:22px 24px}
+h1{font-family:var(--serif);font-size:19px;color:var(--accent);margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--muted);font-size:13px}
+.status{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.spin{flex:none;width:14px;height:14px;border:2px solid var(--rule);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{color:var(--red);font-size:13.5px}
+ol{margin:0 0 12px;padding-left:1.4em;font-size:13.5px;line-height:1.8}
+a{color:var(--accent)}
+code{font-size:12px;background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:0 4px}
+form{display:flex;gap:6px;margin:0 0 8px}
+input{flex:1;min-width:0;border:1px solid var(--rule);border-radius:6px;background:var(--surface);color:var(--ink);padding:7px 10px;font:inherit;font-size:13.5px}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{border:1px solid var(--accent);background:var(--accent);color:var(--surface);border-radius:6px;padding:6px 14px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+button:disabled{opacity:.6;cursor:default}
+button.ghost{background:var(--surface);color:var(--accent)}
+.docs{list-style:none;margin:0;padding:0}
+.docs a{display:block;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;margin-bottom:6px;text-decoration:none}
+@media (prefers-reduced-motion: reduce){.spin{animation:none}}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1 id="title">행정법 기말 필기본</h1>
+  <p class="status" id="statusRow"><span class="spin" aria-hidden="true"></span><span id="status" role="status">불러오는 중…</span></p>
+  <p class="err" id="err" hidden></p>
+  <p id="errActions" hidden><button type="button" class="ghost" id="retoken">다른 토큰 넣기</button></p>
+  <section id="login" hidden>
+    <p>비공개 저장소 <b class="repo"></b>에 있는 행정법 기말 필기본(왼쪽 강의안 · 오른쪽 정리본)을 여는 페이지입니다. 이 기기에서 처음 열 때 한 번만 GitHub 토큰을 넣으면, 필기본과 편집 내용이 모두 불러와지고 편집하면 GitHub에 자동 저장됩니다.</p>
+    <ol>
+      <li><a id="tokenLink" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub 토큰 만들기</a>(Fine-grained token)</li>
+      <li><b>Expiration</b>은 넉넉하게(예: 1년) — 만료되면 새 토큰을 다시 넣어야 함</li>
+      <li><b>Repository access</b> → Only select repositories → <b class="repo"></b> (중간 필기본 토큰을 고쳐서 이 저장소를 더해도 됨 — 그러면 이 화면 없이 바로 열림)</li>
+      <li><b>Permissions</b> → Repository permissions → <b>Contents: Read and write</b></li>
+      <li>만들어진 토큰(<code>github_pat_…</code>)을 아래에 붙여 넣기</li>
+    </ol>
+    <form id="form" autocomplete="off">
+      <input type="password" id="token" placeholder="github_pat_…" aria-label="GitHub 토큰" spellcheck="false" autocapitalize="off" autocomplete="off">
+      <button type="submit" id="go">열기</button>
+    </form>
+    <p class="muted">토큰은 이 기기의 브라우저에만 저장되고 GitHub 외의 곳으로는 보내지 않습니다. 나중에 필기본의 GitHub 동기화 창에서 연결을 해제할 수 있습니다(해제하면 이 화면에서 다시 넣기 전까지 연결되지 않음).</p>
+  </section>
+  <section id="pick" hidden>
+    <ul class="docs" id="docs"></ul>
+  </section>
+</main>
+<script>
+(function(){
+  "use strict";
+  /* 이 페이지에는 필기 내용이 없음: 비공개 저장소에서 토큰으로 필기본 HTML을 받아 그대로 띄움.
+     필기본 안의 동기화 코드가 같은 토큰(localStorage TOKEN_KEY)으로 편집 내용을 주고받음. */
+  var DOCS = {
+    'admin-law-final': { title: '공법Ⅲ 행정법 기말 필기본', repo: 'chamcham02/hang_final', path: '행정법_기말필기본.html', ref: '' }   // ref가 비면 기본 브랜치
+  };
+  var DEFAULT_DOC = 'admin-law-final';
+  /* 같은 chamcham02.github.io에 중간 필기본 뷰어(notes_hangjeong)가 있어 토큰 자리를 나눔.
+     필기본 안의 동기화 코드도 이 키를 씀(빌드의 TOKEN_KEY = meta gh-sync-token-key와 같아야 함).
+     이 키가 비어 있으면 중간 필기본 토큰(LEGACY_KEY)이 이 저장소도 열 수 있는지 보고, 되면 그대로 옮겨 씀 */
+  var TOKEN_KEY = 'gh-sync:token:hang_final', LEGACY_KEY = 'gh-sync:token', API = 'https://api.github.com';
+  // 중간 필기본 토큰을 한 번 옮겨 쓴 뒤 사용자가 연결을 끊었으면(TOKEN_KEY가 빔) 다시 옮겨 오지 않음
+  var ADOPTED_KEY = TOKEN_KEY + ':from-legacy';
+
+  var $ = function(s){ return document.querySelector(s); };
+  var params = new URLSearchParams(location.search);
+  var docId = params.get('doc') || DEFAULT_DOC, doc = DOCS[docId];
+  function getToken(){ try { return localStorage.getItem(TOKEN_KEY) || ''; } catch(e){ return ''; } }
+  function legacyToken(){ try { return localStorage.getItem(LEGACY_KEY) || ''; } catch(e){ return ''; } }
+  function setToken(t){ try { localStorage.setItem(TOKEN_KEY, t); return true; } catch(e){ return false; } }
+  function adoptedBefore(){ try { return localStorage.getItem(ADOPTED_KEY) === '1'; } catch(e){ return true; } }
+  function markAdopted(){ try { localStorage.setItem(ADOPTED_KEY, '1'); } catch(e){} }
+  function status(msg, spinning){ $('#status').textContent = msg; $('#statusRow').hidden = !msg; $('.spin').hidden = !spinning; }
+  function error(msg, retoken){ var e = $('#err'); e.textContent = msg || ''; e.hidden = !msg; $('#errActions').hidden = !(msg && retoken); }
+  function seg(p){ return p.split('/').map(encodeURIComponent).join('/'); }
+  function isRate(r){ return r.status === 429 || (r.status === 403 && r.headers.get('x-ratelimit-remaining') === '0'); }
+  /* 응답이 오지 않으면(약한 신호·와이파이 로그인 화면) ms 뒤 포기 → 보관본이 있으면 그걸로 엶 */
+  function gh(path, token, accept, ms){
+    var ctl = new AbortController(), timer = setTimeout(function(){ ctl.abort(); }, ms || 25000);
+    return fetch(API + path, { headers: { 'Accept': accept || 'application/vnd.github+json', 'Authorization': 'Bearer ' + token }, cache: 'no-store', signal: ctl.signal })
+      .finally(function(){ clearTimeout(timer); });
+  }
+  /* 필기본 파일이 든 폴더 목록 — 파일 sha만 가볍게 확인(파일 자체는 1MB 가까워서 바뀐 경우에만 받음) */
+  function dirPath(d){
+    var dir = d.path.indexOf('/') < 0 ? '' : d.path.slice(0, d.path.lastIndexOf('/'));
+    return '/repos/' + d.repo + '/contents/' + seg(dir) + (d.ref ? '?ref=' + encodeURIComponent(d.ref) : '');
+  }
+  async function docEntry(r){
+    var list = await r.json();
+    var e = Array.isArray(list) ? list.filter(function(x){ return x.path === doc.path; })[0] : null;
+    if (!e) throw new Error(doc.repo + ' 저장소에 ' + doc.path + ' 파일이 없음');
+    return e;
+  }
+
+  /* 받은 필기본은 이 기기에 보관(다음부터 바뀐 경우에만 다시 받음, 인터넷이 없어도 열림) */
+  function idb(){
+    return new Promise(function(res, rej){
+      setTimeout(function(){ rej(new Error('indexedDB timeout')); }, 2000);
+      var q = indexedDB.open('hang-final-viewer', 1);
+      q.onupgradeneeded = function(){ q.result.createObjectStore('docs'); };
+      q.onsuccess = function(){ res(q.result); };
+      q.onerror = function(){ rej(q.error); };
+    });
+  }
+  async function idbGet(k){
+    try {
+      var db = await idb();
+      return await new Promise(function(res){
+        var q = db.transaction('docs', 'readonly').objectStore('docs').get(k);
+        q.onsuccess = function(){ db.close(); res(q.result || null); };
+        q.onerror = function(){ db.close(); res(null); };
+      });
+    } catch(e){ return null; }
+  }
+  async function idbPut(k, v){
+    try {
+      var db = await idb();
+      await new Promise(function(res){
+        var tx = db.transaction('docs', 'readwrite');
+        tx.objectStore('docs').put(v, k);
+        tx.oncomplete = tx.onerror = tx.onabort = function(){ db.close(); res(); };
+      });
+    } catch(e){}
+  }
+
+  function render(html){
+    document.open();
+    document.write(html);   // 읽던 위치·#주소 이동은 필기본이 스스로 처리
+    document.close();
+  }
+
+  function showLogin(msg){
+    status('', false); error(msg, false);
+    Array.prototype.forEach.call(document.querySelectorAll('.repo'), function(e){ e.textContent = doc.repo; });
+    $('#login').hidden = false;
+    $('#token').focus();
+  }
+
+  async function open(){
+    var token = getToken();
+    if (!token && legacyToken() && !adoptedBefore()){
+      // 중간 필기본 토큰에 이 저장소 권한을 더해 두었다면 다시 넣지 않아도 됨
+      status('기존 토큰 확인 중…', true);
+      try {
+        var lr = await gh(dirPath(doc), legacyToken(), null, 8000);
+        if (lr.ok && setToken(legacyToken())){ markAdopted(); token = getToken(); }
+      } catch(e){}
+    }
+    if (!token) return showLogin('');
+    $('#login').hidden = true; error('');
+    status('필기본 확인 중…', true);
+    var cached = await idbGet(docId), meta;
+    try {
+      var r = await gh(dirPath(doc), token, null, cached ? 8000 : 25000);
+      if (!r.ok){
+        // 토큰 만료·권한 문제여도 받아 둔 사본이 있으면 연다(필기본의 GitHub 동기화 창에서 새 토큰으로 다시 연결 가능)
+        if (cached) return render(cached.html);
+        if (r.status === 401) return showLogin('저장된 토큰이 만료되었거나 올바르지 않습니다. 새 토큰을 넣어 주세요.');
+        if (r.status === 404) return showLogin('이 토큰으로는 ' + doc.repo + ' 저장소의 필기본을 볼 수 없습니다. 토큰의 Repository access를 확인하세요.');
+        if (r.status === 403 && !isRate(r)) return showLogin('토큰에 Contents 권한이 없습니다. Permissions에서 Contents: Read and write를 고른 토큰을 넣어 주세요.');
+        throw new Error('GitHub 응답 ' + r.status + (isRate(r) ? ' — 요청 한도, 잠시 뒤 다시 시도' : ''));
+      }
+      meta = await docEntry(r);
+    } catch(e){
+      if (cached) return render(cached.html);
+      status('', false);
+      return error('필기본을 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 새로 고침하세요. (' + e.message + ')', true);
+    }
+    if (cached && cached.sha === meta.sha) return render(cached.html);
+    status('필기본 내려받는 중… (' + Math.round((meta.size || 0) / 1024) + 'KB)', true);
+    try {
+      // sha로 정확히 그 버전을 받음(방금 올라간 빌드와 어긋나지 않게)
+      var raw = await gh('/repos/' + doc.repo + '/git/blobs/' + meta.sha, token, 'application/vnd.github.raw+json', 90000);
+      if (!raw.ok) throw new Error('GitHub 응답 ' + raw.status);
+      var html = await raw.text();
+      await idbPut(docId, { sha: meta.sha, html: html, at: Date.now() });
+      render(html);
+    } catch(e){
+      if (cached) return render(cached.html);
+      status('', false);
+      error('필기본을 내려받지 못했습니다. (' + e.message + ')', true);
+    }
+  }
+
+  $('#retoken').addEventListener('click', function(){ try { localStorage.removeItem(TOKEN_KEY); } catch(e){} showLogin(''); });
+
+  $('#form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    var t = $('#token').value.trim(), btn = $('#go');
+    if (!t) return;
+    btn.disabled = true; error('');
+    try {
+      var r = await gh(dirPath(doc), t);
+      if (r.status === 401) return error('토큰이 올바르지 않습니다. 다시 확인해 주세요.');
+      if (r.status === 404) return error('이 토큰으로는 ' + doc.repo + ' 저장소를 볼 수 없습니다. Repository access에 저장소를 추가했는지 확인하세요.');
+      if (r.status === 403 && !isRate(r)) return error('토큰에 Contents 권한이 없습니다. Permissions → Repository permissions → Contents를 Read and write로 고른 토큰을 만들어 주세요.');
+      if (!r.ok) return error('GitHub 응답 ' + r.status + ' — 잠시 뒤 다시 시도하세요.');
+      if (!setToken(t)) return error('이 브라우저에서는 토큰을 저장할 수 없습니다(개인 정보 보호 모드인지 확인하세요).');
+      $('#token').value = '';
+      open();
+    } catch(err){ error('GitHub에 연결하지 못했습니다. 인터넷 연결을 확인하세요.'); }
+    finally { btn.disabled = false; }
+  });
+
+  if (!doc){
+    status('', false);
+    $('#title').textContent = '필기본 목록';
+    var ul = $('#docs');
+    Object.keys(DOCS).forEach(function(k){
+      var li = document.createElement('li'), a = document.createElement('a');
+      a.href = '?doc=' + encodeURIComponent(k); a.textContent = DOCS[k].title;
+      li.appendChild(a); ul.appendChild(li);
+    });
+    $('#pick').hidden = false;
+    return;
+  }
+  document.title = doc.title;
+  $('#title').textContent = doc.title;
+  open();
+})();
+</script>
+</body>
+</html>
